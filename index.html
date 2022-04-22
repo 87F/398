@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer,same-origin">
+  <meta name="author" content="avanier">
+  <script src="js/nodes.js"></script>
+  <script src="js/idle.js" defer></script>
+  <script src="js/topo.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/terminal.js" defer></script>
+  <link rel="stylesheet" href="a.css"/>
+  <title>398</title>
+  <style>
+    :root {
+      --bg: #1e1e24;
+      --fg: #e4e4e4;
+      --mid: #555;
+      --acc: #ed4141;
+    }
+  </style>
+</head>
+<body>
+  <form id="terminal" action="#" onsubmit="return false;" autocomplete="off" spellcheck="false">
+    <input type="text" id="input" autofocus="autofocus" placeholder="~">
+  </form>
+  <output id="output" for="input"></output>
+  <main id="main"></main>
+  <output id="extra" for="main"></output>
+  <script>
+const O = (id) => TheGrid.network[id] ? TheGrid.network[id] : new Node(id);
+const formatAPI = (verb, url) =>
+  `<small><span class='n'>${verb}</span> ${url}</small>`;
+const formatModule = (module, fn) =>
+  `<small><span class='n'>${module}</span>.${fn}</small>`;
+
+const SLIDES = {
+  sample: () => {
+    O("Sample").create({ x: 24, y: 9 }, NODES.Mesh, [
+      O("X").create({ x: 6, y: 4 }, NODES.Database),
+
+      O("Y").create({ x: 10, y: 8 }, NODES.Database),
+
+      O("Z").create({ x: 14, y: 12 }, NODES.Database),
+
+      O("A")
+        .create({ x: 0, y: 0 }, NODES.Service.Identity)
+        .attach("Hello World")
+        .connect("X"),
+
+      O("B")
+        .create({ x: 0, y: 12 }, NODES.Service.Identity)
+        .connect(["Z", "Y"]),
+
+      O("C")
+        .create({ x: 10, y: 0 }, NODES.Service.Identity)
+        .syphon(["X", "Z", "Y"]),
+    ]);
+  }
+}
+
+SLIDES.sample();
+TheGrid.graph();
+  </script>
+</body>
+</html>
