@@ -465,7 +465,7 @@ function Terminal() {
     );
 
     this.input.focus();
-    logs.push("<br>terminal ready.");
+    logs.push("<br>terminal ready.<br>type 'commands' for a list of commands.");
     this.output.innerHTML = logs.join("<br>");
   };
 }
